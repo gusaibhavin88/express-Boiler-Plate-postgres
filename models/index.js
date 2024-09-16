@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const sequelize = new Sequelize({
-  database: process.env.DATABASE_NAME, // Use environment variables for flexibility
+  database: process.env.DATABASE_NAME,
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   host: process.env.DATABASE_HOST,
@@ -15,6 +15,7 @@ const sequelize = new Sequelize({
     acquire: 30000,
     idle: 10000,
   },
+  logging: false,
 });
 
 sequelize
@@ -23,19 +24,23 @@ sequelize
     console.log("Database connection successful.");
   })
   .catch((err) => {
-    console.error("Issue in Database connection:", err); // Use `console.error` for errors
+    console.error("Issue in Database connection:", err);
   });
 
 const db = {};
+
+db.User = require("../models/user.model")(sequelize, DataTypes);
+db.UserDetail = require("../models/details.model")(sequelize, DataTypes);
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Tables
-db.User = require("../models/user.model");
-
-// Relations
-
-// Connections
 db.sequelize
   .sync({ alter: true })
   .then(() => {

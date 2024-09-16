@@ -7,8 +7,7 @@ const {
 } = require("../utils/utils");
 const statusCode = require("../messages/statusCodes.json");
 const bcrypt = require("bcryptjs");
-const User = require("../models/user.model");
-const User_Details = require("../models/details.model");
+const { User_Details, User } = require("../models");
 
 class UserService {
   // Add User Details

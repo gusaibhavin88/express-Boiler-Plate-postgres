@@ -7,7 +7,7 @@ const errorHandler = require("./helpers/error");
 const cors = require("cors");
 const rootRoutes = require("./routes/index");
 const logger = require("./logger");
-require("./config/dbConnection.js");
+require("./models/index");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

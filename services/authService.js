@@ -11,7 +11,7 @@ const statusCode = require("../messages/statusCodes.json");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../helpers/sendEmail");
-const User = require("../models/user.model");
+const { User } = require("../models");
 
 class UserService {
   tokenGenerator = async (payload) => {
@@ -77,6 +77,7 @@ class UserService {
       if (!passwordValidation(password)) {
         return throwError(returnMessage("auth", "invalidPassword"));
       }
+      console.log("jhjyh");
 
       const user = await User.findOne({ email: email });
       if (!user) {
@@ -88,6 +89,7 @@ class UserService {
       if (!correctPassword) {
         return throwError(returnMessage("auth", "invalidUser"));
       }
+      console.log("lllll");
 
       const userData = await this.tokenGenerator(user);
       return userData;
