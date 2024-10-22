@@ -5,13 +5,12 @@ const UserService = require("../services/userService");
 const { sendResponse } = require("../utils/sendResponse");
 const userService = new UserService();
 
-// User updated
-exports.addUserDetail = catchAsyncError(async (req, res, next) => {
-  const user = await userService.addUserDetail(req?.body, req?.user);
+// Method Name
+exports.controllerName = catchAsyncError(async (req, res, next) => {
   sendResponse(
     res,
     true,
-    returnMessage("auth", "userUpdated"),
+    returnMessage("moduleKey", "subMouleKey"),
     user,
     statusCode.success
   );

@@ -11,7 +11,6 @@ const statusCode = require("../messages/statusCodes.json");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../helpers/sendEmail");
-const { User } = require("../models");
 
 class UserService {
   tokenGenerator = async (payload) => {
@@ -33,68 +32,11 @@ class UserService {
     }
   };
 
-  // User Sign up
-  signUp = async (payload, image) => {
+  // Service Method Name
+  serviceName = async (payload) => {
     try {
-      const { email, password, name } = payload;
-
-      if (!validateEmail(email)) {
-        return throwError(returnMessage("auth", "invalidEmail"));
-      }
-
-      if (!passwordValidation(password)) {
-        return throwError(returnMessage("auth", "invalidPassword"));
-      }
-
-      const user = await User.findOne({ email: email });
-      if (user) {
-        return throwError(returnMessage("auth", "emailExist"));
-      }
-
-      const hashPassword = await bcrypt.hash(password, 14);
-
-      let newUser = await User.create({
-        email,
-        password: hashPassword,
-        name,
-      });
-      return newUser;
     } catch (error) {
-      logger.error(`Error while user signup: ${error}`);
-      return throwError(error?.message, error?.statusCode);
-    }
-  };
-
-  // User Login
-  login = async (payload) => {
-    try {
-      const { email, password } = payload;
-
-      if (!validateEmail(email)) {
-        return throwError(returnMessage("auth", "invalidEmail"));
-      }
-
-      if (!passwordValidation(password)) {
-        return throwError(returnMessage("auth", "invalidPassword"));
-      }
-      console.log("jhjyh");
-
-      const user = await User.findOne({ email: email });
-      if (!user) {
-        return throwError(returnMessage("auth", "invalidUser"));
-      }
-
-      const correctPassword = await bcrypt.compare(password, user?.password);
-
-      if (!correctPassword) {
-        return throwError(returnMessage("auth", "invalidUser"));
-      }
-      console.log("lllll");
-
-      const userData = await this.tokenGenerator(user);
-      return userData;
-    } catch (error) {
-      logger.error(`Error while  login : ${error}`);
+      logger.error(`Error name: ${error}`);
       return throwError(error?.message, error?.statusCode);
     }
   };
