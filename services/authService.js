@@ -15,17 +15,6 @@ const sendEmail = require("../helpers/sendEmail");
 class UserService {
   tokenGenerator = async (payload) => {
     try {
-      const expiresIn = payload?.remember_me
-        ? process.env.JWT_REMEMBER_EXPIRE
-        : process.env.JWT_EXPIRES_IN;
-      const token = jwt.sign(
-        { id: payload.id },
-        process.env.JWT_User_SECRET_KEY,
-        {
-          expiresIn,
-        }
-      );
-      return { token, user: payload };
     } catch (error) {
       logger.error(`Error while token generate, ${error}`);
       throwError(error?.message, error?.statusCode);
