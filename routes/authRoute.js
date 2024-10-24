@@ -5,12 +5,12 @@ const { protect } = require("../middlewares/authUserMiddleware");
 const { checkProfileSize, upload } = require("../helpers/multer");
 
 authRoute.post(
-  "/routerName",
+  "/routerName"
   // checkProfileSize,
   // upload.single("profile_image"),
   // validateUserRegistration,
   // validatorFunc,
-  authController.functionName
+  // authController.functionName
 );
 authRoute.use(protect);
 
